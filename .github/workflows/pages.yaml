@@ -26,6 +26,7 @@ jobs:
         run: npm run build
         env:
           PUBLIC_URL: /spotify-hitster
+          VITE_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
       - name: upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
