@@ -1,6 +1,5 @@
 const clientId = import.meta.env.VITE_CLIENT_ID;
-console.log(clientId)
-const redirectUri = 'http://localhost:5173/callback';
+const redirectUri = import.meta.env.VITE_REDIRECT_URI;
 
 const scope = 'user-read-private user-read-email playlist-read-private';
 const authUrl = new URL("https://accounts.spotify.com/authorize")
@@ -95,9 +94,10 @@ export async function completeLogin() {
     await createAccessToken({
         grant_type: 'authorization_code',
         code: params.get('code') as string,
-        redirect_uri: `${location.origin}/callback`,
+        redirect_uri: redirectUri,
         code_verifier: code_verifier as string,
     })
+    window.location.href = redirectUri
 }
 
 export function logout() {
@@ -150,6 +150,10 @@ export async function getAccessToken(): Promise<string> {
     return tokenSet.access_token
 }
 
-export function isAuthenticated() {
+function hasTokenSet(): boolean {
     return !!localStorage.getItem('tokenSet')
+}
+
+export function isAuthenticated() {
+    return hasTokenSet() && !!getAccessToken();
 }

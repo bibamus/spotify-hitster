@@ -27,6 +27,7 @@ jobs:
         env:
           PUBLIC_URL: /spotify-hitster
           VITE_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          VITE_REDIRECT_URI: https://bibamus.github.io/spotify-hitster/
       - name: upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
